@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'chat.dart';
-import 'buttonpg.dart';
 class Home1 extends StatelessWidget {
   const Home1({super.key});
 

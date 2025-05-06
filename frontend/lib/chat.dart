@@ -25,7 +25,7 @@ class _Chat1PgState extends State<Chat1Pg> {
     _controller.clear();
 
     try {
-      final url = Uri.parse('http://127.0.0.1:5000/chat');
+      final url = Uri.parse('https://suvidha-1-avnc.onrender.com/chat');
       final response = await http.post(
         url,
         headers: {'Content-Type': 'application/json'},
