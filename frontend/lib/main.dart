@@ -16,9 +16,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: const Splash(), 
+      title: "Suvidha",
       routes: {
         '/home': (context) => const Home1(), 
-        '/chatpg': (context) => const Chat1Pg(), 
+        '/chatpg': (context) => const Chat1Pg(domain: '',), 
         '/buttonpg': (context) => const ButtonPage(), 
       },
     );

@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;   
-import 'dart:convert';                      
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class Chat1Pg extends StatefulWidget {
-  const Chat1Pg({super.key});
+  final String domain;
+  const Chat1Pg({super.key, required this.domain});
 
   @override
-  _ChatPgState createState() => _ChatPgState();
+  _Chat1PgState createState() => _Chat1PgState();
 }
 
-class _ChatPgState extends State<Chat1Pg> {
-  final List<Map<String, String>> messages = [];  
+class _Chat1PgState extends State<Chat1Pg> {
+  final List<Map<String, String>> messages = [];
   final TextEditingController _controller = TextEditingController();
 
   Future<void> _sendMessage() async {
@@ -24,11 +25,14 @@ class _ChatPgState extends State<Chat1Pg> {
     _controller.clear();
 
     try {
-      final url = Uri.parse('http://10.0.2.2:5000/chat'); 
+      final url = Uri.parse('http://127.0.0.1:5000/chat');
       final response = await http.post(
         url,
         headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({'message': userMessage}),
+        body: jsonEncode({
+          'domain': widget.domain,
+          'query': userMessage,
+        }),
       );
 
       if (response.statusCode == 200) {
@@ -54,17 +58,12 @@ class _ChatPgState extends State<Chat1Pg> {
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () {
-            Navigator.pop(context);
-          },
+          onPressed: () => Navigator.pop(context),
         ),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(
-              'assets/robot.png',
-              height: 40,
-            ),
+            Image.asset('assets/robot.png', height: 40),
             const SizedBox(width: 10),
             const Text(
               'SUVIDHA',
@@ -123,6 +122,10 @@ class _ChatPgState extends State<Chat1Pg> {
                       filled: true,
                       fillColor: Colors.grey[200],
                     ),
+                    // Detect Enter key press
+                    onSubmitted: (text) {
+                      _sendMessage(); // Send message on Enter
+                    },
                   ),
                 ),
                 const SizedBox(width: 8),
