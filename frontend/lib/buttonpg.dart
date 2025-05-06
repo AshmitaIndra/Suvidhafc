@@ -7,7 +7,6 @@ class ButtonPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Gradient Background
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -40,7 +39,7 @@ class ButtonPage extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: Colors.white.withOpacity(0.9),
                       borderRadius: BorderRadius.circular(20),
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(
                           color: Colors.black26,
                           blurRadius: 10,
@@ -51,26 +50,11 @@ class ButtonPage extends StatelessWidget {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        buildButton(
-                          context,
-                          label: "E-Commerce",
-                          color: Colors.purple,
-                          textColor: Colors.white,
-                        ),
+                        buildButton(context, label: "E-Commerce", domain: "ecommerce", color: Colors.purple, textColor: Colors.white),
                         const SizedBox(height: 20),
-                        buildButton(
-                          context,
-                          label: "Medical",
-                          color: Colors.green,
-                          textColor: Colors.white,
-                        ),
+                        buildButton(context, label: "Medical", domain: "medical", color: Colors.green, textColor: Colors.white),
                         const SizedBox(height: 20),
-                        buildButton(
-                          context,
-                          label: "Banking",
-                          color: const Color.fromARGB(255, 222, 218, 3),
-                          textColor: Colors.black,
-                        ),
+                        buildButton(context, label: "Banking", domain: "banking", color: const Color.fromARGB(255, 222, 218, 3), textColor: Colors.black),
                       ],
                     ),
                   ),
@@ -83,8 +67,12 @@ class ButtonPage extends StatelessWidget {
     );
   }
 
-  // Reusable Button Builder
-  Widget buildButton(BuildContext context, {required String label, required Color color, required Color textColor}) {
+  Widget buildButton(BuildContext context, {
+    required String label,
+    required String domain,
+    required Color color,
+    required Color textColor
+  }) {
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
@@ -100,13 +88,12 @@ class ButtonPage extends StatelessWidget {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const Chat1Pg()),
+            MaterialPageRoute(
+              builder: (context) => Chat1Pg(domain: domain),
+            ),
           );
         },
-        child: Text(
-          label,
-          style: TextStyle(color: textColor),
-        ),
+        child: Text(label, style: TextStyle(color: textColor)),
       ),
     );
   }
